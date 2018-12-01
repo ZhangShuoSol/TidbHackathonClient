@@ -1,22 +1,26 @@
 <template>
   <div class="collapsible-menu-container">
-    <pre class="sql-formatter">
-      {{format}}
-    </pre>
+    <div class="sql-formatter">
+      <SqlFormatter :sql="format"/>
+    </div>
   </div>
 </template>
 
 <script>
   import {mapState, mapActions, mapMutations} from 'vuex';
   import types                                from '../../vuex/types';
+  import SqlFormatter                         from './SqlFormatter';
 
 
   export default {
-    name    : "CollapsibleMenuContainer",
-    computed: {
+    name      : "CollapsibleMenuContainer",
+    computed  : {
       ...mapState([
         'format'
       ]),
+    },
+    components: {
+      SqlFormatter
     }
 
   }
@@ -28,7 +32,6 @@
     height: 100%;
 
     .sql-formatter {
-      color: #fff;
       padding: 15px;
     }
   }
