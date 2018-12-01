@@ -12,7 +12,7 @@ export default function ChartMixin(resKey, ChartConstructor) {
           this.$nextTick(function () {
             this.$refs[resKey].innerHTML = '';
             const instance = new ChartConstructor(this.$refs[resKey], this);
-            instance.draw(this.data);
+            instance.draw(this.data, this.activeNode);
           })
         }
       }

@@ -4,6 +4,8 @@
       <SqlExplainTree
         :data="treeData"
         v-if="treeData"
+        @on-enter-tree-node="setHoverKey"
+        @on-leave-tree-node="clearHoverKey"
       />
     </div>
 
@@ -13,8 +15,10 @@
       v-if="planVisible"
     >
       <SqlMenuTree
-        :data="treeData"
         v-if="treeData"
+        :data="treeData"
+        :key="hoverKey"
+        :active-node="hoverKey"
       />
     </div>
 
@@ -31,17 +35,34 @@
   export default {
     name      : "MainContainerItem",
     props     : {
-      treeData: [Object, null],
-      plan: [Object, Array]
+      treeData    : [Object, null],
+      plan        : [Object, Array],
+      setIndexFunc: false,
     },
     data() {
       return {
         planVisible: false,
+        hoverKey   : '',
       }
     },
-    methods: {
+    methods   : {
       toggle() {
         this.planVisible = !this.planVisible;
+      },
+      setHoverKey(event, d) {
+        this.hoverKey = d.data.uuid;
+      },
+      clearHoverKey() {
+        this.hoverKey = '';
+      }
+    },
+    watch     : {
+      treeData: {
+        deep: true,
+        handler() {
+          console.log('---MainContainerItem: treeData value changing...');
+          this.hoverKey = '';
+        }
       }
     },
     components: {

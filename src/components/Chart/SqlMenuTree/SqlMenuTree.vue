@@ -12,6 +12,9 @@
 
   export default {
     name  : "SqlMenuTree",
+    props: {
+      activeNode: '',
+    },
     mixins: [ChartMixin('sqlMenuTree', D3MenuTree)],
   }
 </script>

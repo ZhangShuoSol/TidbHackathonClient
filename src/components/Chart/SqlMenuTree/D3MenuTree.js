@@ -30,16 +30,18 @@ export default class D3MenuTree {
       .attr('transform', `translate(${margin.left}, ${margin.right})`)
   }
 
-  draw(data) {
+  draw(data, activeNode) {
     this.root    = d3.hierarchy(data, function (d) {
       return d.nodes;
     });
     this.root.x0 = 0;
     this.root.y0 = 0;
-    this.update(this.root);
+    this.update(this.root, activeNode);
+
   }
 
-  update(source) {
+  update(source, activeNode) {
+
     // Compute the flattened node list.
     var nodes = this.root.descendants();
 
@@ -65,8 +67,6 @@ export default class D3MenuTree {
       .style("height", height + "px");
 
 
-    console.log();
-
     // Update the nodes…
     var node = this.g.selectAll(".node")
       .data(nodes, function (d) { return d.id || (d.id = ++this.i); });
@@ -81,7 +81,20 @@ export default class D3MenuTree {
       .attr("y", -barHeight / 2)
       .attr("height", barHeight)
       .attr("width", barWidth)
-      .style("fill", color);
+      .style("fill", d => {
+        if (d.data.uuid === activeNode) { // 匹配到激活节点
+          return '#ff0';
+        } else if (d._children) { // 当前节点收起
+          return '#3182bd';
+        } else if (d.children) { // 当前节点存在子节点
+          return '#c6dbef';
+        } else { // 叶子节点
+          return '#fd8d3c';
+        }
+
+
+        // return d._children ? "#3182bd" : d.children ? "#c6dbef" : "#fd8d3c";
+      });
 
     nodeEnter
       .append('foreignObject')
@@ -129,13 +142,6 @@ export default class D3MenuTree {
       .duration(duration)
       .attr("transform", function (d) { return "translate(" + d.y + "," + d.x + ")"; })
       .style("opacity", 1);
-
-    node.transition()
-      .duration(duration)
-      .attr("transform", function (d) { return "translate(" + d.y + "," + d.x + ")"; })
-      .style("opacity", 1)
-      .select("rect")
-      .style("fill", color);
 
     // Transition exiting nodes to the parent's new position.
     node.exit().transition()
