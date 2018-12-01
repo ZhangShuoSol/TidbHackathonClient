@@ -8,6 +8,6 @@ export default {
       id : '',
       sql: state.sql,
     });
-    console.log(result);
+    commit(types.MUTATION.STORE_EXECUTE_RESULT, result);
   }
 };

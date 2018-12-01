@@ -13,7 +13,6 @@
 <script>
   export default {
     name: "LayoutContainerContent",
-
   }
 </script>
 
@@ -23,11 +22,6 @@
     height: 100%;
     display: flex;
     flex-direction: column;
-
-    & * {
-      border: 1px solid lightgrey;
-    }
-
 
     .layout-container-content-top {
       padding: 15px;

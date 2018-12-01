@@ -8,20 +8,28 @@
 
 
   export default {
-    name : 'HelloWorld',
-    props: {
+    name   : 'SqlExplainTree',
+    props  : {
       data: [Object, Array]
     },
     mounted() {
+      this.draw();
     },
-    watch: {
+    methods: {
+      draw() {
+        if (this.$refs.treeNode && this.data) {
+          this.$nextTick(function () {
+            const d3Tree = new D3Tree(this.$refs.treeNode);
+            d3Tree.draw(this.data);
+          })
+        }
+      }
+    },
+    watch  : {
       data: {
         deep: true,
         handler(val) {
-          if (this.$refs.treeNode) {
-            const d3Tree = new D3Tree(this.$refs.treeNode);
-            d3Tree.draw(val);
-          }
+          this.draw();
         }
       }
     }

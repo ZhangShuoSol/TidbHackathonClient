@@ -36,7 +36,7 @@ export default class D3Tree {
 
   draw(data) {
     const hierarchyData = d3.hierarchy(data, function (d) {
-      return d.node;
+      return d.nodes;
     })
       .sum(function (d) {
         return d.value;

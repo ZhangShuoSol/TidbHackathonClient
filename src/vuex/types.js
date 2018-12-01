@@ -6,7 +6,8 @@ const types = {
     'EXECUTE_SQL',
   ]),
   MUTATION: generatorMutations([
-    'STORE_SQL'
+    'STORE_SQL',
+    'STORE_EXECUTE_RESULT'
   ]),
   GETTER  : {},
 };

@@ -8,12 +8,15 @@
     >
       <el-button slot="append" icon="el-icon-search" @click="executeSql"></el-button>
     </el-input>
-    <slot></slot>
+    <template>
+      <MainContainerItem :treeData="treeNode" />
+    </template>
   </LayoutContainerContent>
 </template>
 
 <script>
   import LayoutContainerContent               from '../Layout/LayoutContainerContent'
+  import MainContainerItem                    from './MainContainerItem'
   import {mapState, mapActions, mapMutations} from 'vuex';
   import types                                from '../../vuex/types';
 
@@ -21,11 +24,13 @@
   export default {
     name      : "MainContainer",
     components: {
-      LayoutContainerContent
+      LayoutContainerContent,
+      MainContainerItem,
     },
     computed  : {
       ...mapState([
-        'sql'
+        'sql',
+        'treeNode',
       ]),
       sqlModel: {
         get() {return this.sql;},
