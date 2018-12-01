@@ -38,6 +38,10 @@
       .node-title-text {
         margin-left: 20px;
       }
+
+      .node-title-info {
+        margin-left: 30px;
+      }
     }
 
     .node rect {

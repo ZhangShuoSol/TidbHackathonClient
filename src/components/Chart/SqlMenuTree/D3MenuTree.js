@@ -134,6 +134,10 @@ export default class D3MenuTree {
           .attr('class', 'node-title-text')
           .text(d.data.name).node());
 
+        div.append(_ => d3.create('div')
+          .attr('class', 'node-title-info')
+          .text(d.data.info.operatorinfo).node());
+
         return div.node();
       });
 
