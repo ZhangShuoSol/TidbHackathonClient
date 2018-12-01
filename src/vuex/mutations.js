@@ -2,7 +2,7 @@ import types from './types';
 
 
 const REG_UPPER_CASE = /^[A-Z]+$/;
-const REG_TABLE_FIELD = /^([A-Za-z]+).([A-Za-z]+\w+)$/;
+const REG_TABLE_FIELD = /^([A-Za-z]+)\.([A-Za-z]+\w+)$/;
 
 export default {
   [types.MUTATION.STORE_SQL](state, sql) {
@@ -10,7 +10,7 @@ export default {
   },
   [types.MUTATION.STORE_EXECUTE_RESULT](state, result) {
     state.uuid = result.uuid;
-    state.currentField = '';
+    state.currentKeyword = '';
     state.treeNodes = [result.node];
 
     state.format = result.format
@@ -39,9 +39,8 @@ export default {
                 })
               } else if (regResult = REG_TABLE_FIELD.exec(frag)) {
                 $row.push({
-                  type : 'table',
-                  table: regResult[1],
-                  field: regResult[2]
+                  type: 'db',
+                  text: frag
                 })
               } else {
                 $row.push({
@@ -57,10 +56,10 @@ export default {
       });
     state.menuVisible = true;
   },
-  [types.MUTATION.STORE_FIELD_INDEX_RESULT](state, {field}) {
-    state.currentField = field;
+  [types.MUTATION.STORE_SQL_KEYWORD](state, {keyword}) {
+    state.currentKeyword = keyword;
   },
-  [types.MUTATION.STORE_MENU_VISIBLE_STATE](state, visible){
+  [types.MUTATION.STORE_MENU_VISIBLE_STATE](state, visible) {
     state.menuVisible = visible;
   }
 }

@@ -6,22 +6,11 @@
     >
       <span
         v-for="frag in row"
-        :class="frag.type"
+        class="field"
+        :class="[frag.type, {active: currentKeyword === frag.text}]"
+        @click="setKeyword(frag)"
       >
-        <template v-if="frag.type === 'table'">
-          {{frag.table}}.
-          <span
-            class="field"
-            :class="{active: currentField === frag.field}"
-            @click="setField(frag.field)"
-          >
-            {{frag.field}}
-          </span>
-        </template>
-        <template v-else>
           {{frag.text}}
-        </template>
-
       </span>
     </div>
   </div>
@@ -29,14 +18,14 @@
 
 <script>
   export default {
-    name : "SqlFormatter",
-    props: {
-      sql: Array,
-      currentField: String,
+    name   : "SqlFormatter",
+    props  : {
+      sql         : Array,
+      currentKeyword: String,
     },
     methods: {
-      setField(field) {
-        this.$emit('on-set-field', field)
+      setKeyword(field) {
+        this.$emit('on-set-keyword', field)
       }
     }
   }
@@ -53,35 +42,33 @@
         margin-left: 10px;
       }
 
-      .table, .normal, .key, .index {
+      .db, .normal, .key, .index {
         padding: 0 5px;
         border-radius: 4px;
       }
 
-      .table, .normal, .key {
+      .db, .normal, .key {
         color: #9b9b9b;
       }
 
-      .table {
-        .field {
-          @keyframes highlight_field {
-            from {
-              background: rgba(255, 255, 255, 0);
-              box-shadow: 0 0 0 3px rgba(255, 255, 255, 0);
-            }
-            to {
-              background: rgba(255, 255, 255, 0.2);
-              box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
-            }
+      .db {
+        @keyframes highlight_field {
+          from {
+            background: rgba(255, 255, 255, 0);
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0);
           }
-          color: #fff;
-          cursor: pointer;
-
-          &:hover, &.active {
-            animation: highlight_field .5s;
+          to {
             background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2)
+            box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
           }
+        }
+        color: #fff;
+        cursor: pointer;
+
+        &:hover, &.active {
+          animation: highlight_field .5s;
+          background: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2)
         }
       }
 

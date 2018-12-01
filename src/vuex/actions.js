@@ -19,9 +19,10 @@ export default {
       format
     });
   },
-  async [types.ACTION.SET_FIELD_INDEX]({commit}, field) {
-    commit(types.MUTATION.STORE_FIELD_INDEX_RESULT, {
-      field,
+  async [types.ACTION.GET_TABLE_FIELDS]({commit}, keyword) {
+    if (keyword.type !== 'db') {return;}
+    commit(types.MUTATION.STORE_SQL_KEYWORD, {
+      keyword: keyword.text,
     })
   }
 };

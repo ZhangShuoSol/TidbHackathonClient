@@ -3,8 +3,8 @@
     <div class="sql-formatter">
       <SqlFormatter
         :sql="format"
-        :current-field="currentField"
-        @on-set-field="setField"
+        :current-keyword="currentKeyword"
+        @on-set-keyword="setKeyword"
       />
     </div>
   </div>
@@ -21,12 +21,12 @@
     computed  : {
       ...mapState([
         'format',
-        'currentField',
+        'currentKeyword',
       ]),
     },
     methods: {
       ...mapActions({
-        setField: types.ACTION.SET_FIELD_INDEX
+        setKeyword: types.ACTION.GET_TABLE_FIELDS
       }),
     },
     components: {
