@@ -13,6 +13,7 @@
         v-for="treeNode in treeNodes"
         :key="treeNodes.uuid"
         :treeData="treeNode"
+        @on-plan-show="setMenuVisible(false)"
       />
     </template>
   </LayoutContainerContent>
@@ -44,6 +45,9 @@
     methods   : {
       ...mapActions({
         executeSql: types.ACTION.EXECUTE_SQL,
+      }),
+      ...mapMutations({
+        setMenuVisible: types.MUTATION.STORE_MENU_VISIBLE_STATE,
       })
     }
   }

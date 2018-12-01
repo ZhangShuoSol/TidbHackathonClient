@@ -14,7 +14,7 @@
     <div
       class="main-container-group-item"
       :class="[planVisible ? 'show' : 'hide']"
-      v-if="planVisible"
+      :key="planVisible && Guid()"
     >
       <SqlMenuTree
         v-if="treeData"
@@ -33,6 +33,7 @@
   import LayoutContainerContentItem             from '../../Layout/LayoutContainerContentItem';
   import SqlExplainTree, {SqlExplainTreeDetail} from '../../Chart/SqlExplainTree';
   import SqlMenuTree                            from '../../Chart/SqlMenuTree';
+  import Guid                                   from '@/utils/Guid';
 
 
   export default {
@@ -51,6 +52,7 @@
     methods   : {
       toggle() {
         this.planVisible = !this.planVisible;
+        this.$emit(`on-plan-${this.planVisible ? 'show' : 'hide'}`);
       },
       setHoverKey(event, d) {
         this.hoverKey = d.data.uuid;
@@ -63,7 +65,8 @@
       },
       hideInfoLayer(e, d) {
         this.$refs.sqlExplainTreeDetail.hide();
-      }
+      },
+      Guid
     },
     watch     : {
       treeData: {
@@ -71,6 +74,7 @@
         handler() {
           console.log('---MainContainerItem: treeData value changing...');
           this.hoverKey = '';
+          this.planVisible = false;
         }
       }
     },
@@ -94,16 +98,35 @@
       width: 100%;
       height: 100%;
 
+      @keyframes from-right-to-left {
+        from {transform: translate(100%, 0);}
+        to {transform: translate(0, 0);}
+      }
+
+      @keyframes from-left-to-right {
+        from {transform: translate(0, 0)}
+        to {transform: translate(100%, 0)}
+      }
+
+      @keyframes from-right {
+        from {right: 0;}
+        to {right: 50%;}
+      }
+
       &.hide {
         display: none;
+        flex: 0;
+        /*animation: from-left-to-right .2s;*/
       }
 
       &.show {
         display: block;
         background: rgba(0, 0, 0, 0.85);
+        /*animation: from-right-to-left .2s;*/
 
         & + .plan-layer-toggle {
           right: 50%;
+          /*animation: from-right .2s;*/
         }
       }
     }
