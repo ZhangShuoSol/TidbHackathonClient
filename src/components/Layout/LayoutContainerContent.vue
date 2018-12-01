@@ -5,8 +5,7 @@
     </div>
 
     <div class="layout-container-content-main">
-      <div class="layout-container-content-main-left"><slot name="left"></slot></div>
-      <div class="layout-container-content-main-right"><slot name="right"></slot></div>
+      <slot></slot>
     </div>
   </div>
 </template>
@@ -38,10 +37,6 @@
       width: 100%;
       height: 100%;
       display: flex;
-
-      .layout-container-content-main-left, .layout-container-content-main-right {
-        flex: 1;
-      }
     }
   }
 </style>

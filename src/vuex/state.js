@@ -1,3 +1,6 @@
 export default {
-  treeList: []
+  sql: '',
+  uuid: '',
+  treeList: [],
+  plan: []
 };

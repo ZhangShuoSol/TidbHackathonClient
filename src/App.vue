@@ -1,7 +1,10 @@
 <template>
   <div id="app">
     <LayoutContainer>
-      <LayoutContainerContent slot="main"></LayoutContainerContent>
+      <MainContainer slot="main">
+        <LayoutContainerContentItem></LayoutContainerContentItem>
+        <LayoutContainerContentItem></LayoutContainerContentItem>
+      </MainContainer>
     </LayoutContainer>
   </div>
 </template>
@@ -11,6 +14,9 @@
   import HelloWorld      from './components/HelloWorld'
   import LayoutContainer from './components/Layout/LayoutContainer';
   import LayoutContainerContent from './components/Layout/LayoutContainerContent';
+  import LayoutContainerContentItem from './components/Layout/LayoutContainerContentItem';
+
+  import MainContainer from './components/Main';
 
 
   export default {
@@ -20,6 +26,9 @@
       HelloWorld,
       LayoutContainer,
       LayoutContainerContent,
+      LayoutContainerContentItem,
+
+      MainContainer,
     }
   }
 </script>

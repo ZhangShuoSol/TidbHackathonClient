@@ -3,7 +3,7 @@ import Type         from './Type';
 import {MessageBox} from 'element-ui';
 
 
-export const SERVER_BASE_PATH = 'http://1.1.1.1';
+export const SERVER_BASE_PATH = 'http://192.168.195.63:8666';
 export const SERVER_REQUEST_PATH = SERVER_BASE_PATH;
 
 let _instance;// 常规请求实例
@@ -171,7 +171,7 @@ export function RequestGenerator(func, default_return, onError) {
   return function (...args) {
     return new Promise(async function (resolve, reject) {
       try {
-        const res = (await func(...args)).data;
+        const res = (await func(...args));
         resolve(res == undefined ? default_return : res);
       } catch (e) {
         (onError || defaultError)(e, default_return, resolve, reject);

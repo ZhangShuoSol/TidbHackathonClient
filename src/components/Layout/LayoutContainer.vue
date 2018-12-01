@@ -4,7 +4,10 @@
       class="collapsible-menu"
       :class="{hide: !menuVisible}"
     >
-      <div class="toggle-layer" @click="toggleCollapsibleMenu"></div>
+      <div
+        class="toggle-layer"
+        @click="toggleCollapsibleMenu"
+      ></div>
       <slot name="menu"></slot>
     </div>
     <div class="layout-container-main">
