@@ -65,15 +65,7 @@
 
       /* 折叠菜单切换层 */
       .toggle-layer {
-        @keyframes toggle_layer_show {
-          from {opacity: 0}
-          to {opacity: 1}
-        }
-
-        @keyframes toggle_layer_hide {
-          from {opacity: 1}
-          to {opacity: 0}
-        }
+        @import "@/style/opacity.scss";
 
         position: absolute;
         height: 100px;
@@ -84,11 +76,12 @@
         border-radius: 0 4px 4px 0;
         opacity: 0;
         cursor: pointer;
-        animation: toggle_layer_hide .5s;
+        animation: toggle_layer_hide .3s ease-out;
+        z-index: 200;
 
         &:hover {
           opacity: 1;
-          animation: toggle_layer_show .5s;
+          animation: toggle_layer_show .3s ease-in;
         }
       }
     }

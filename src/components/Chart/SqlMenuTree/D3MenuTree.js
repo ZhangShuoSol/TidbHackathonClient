@@ -124,11 +124,6 @@ export default class D3MenuTree {
         return div.node();
       });
 
-    // nodeEnter.append("text")
-    //   .attr("dy", 3.5)
-    //   .attr("dx", 5.5)
-    //   .text(function (d) { return d.data.name; });
-
     // Transition nodes to their new position.
     nodeEnter.transition()
       .duration(duration)

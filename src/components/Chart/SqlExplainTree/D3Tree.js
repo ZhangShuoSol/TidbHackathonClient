@@ -22,17 +22,42 @@ export default class D3Tree {
     this.width = parseFloat(style.width);
     this.height = parseFloat(style.height);
 
+
     // this.svg = d3.select(this.$el)
     //   .append('svg')
     //   .attr('width', this.width)
     //   .attr('height', this.height);
 
+    this.svg = d3.select(this.$el)
+      .append('svg')
+      .style('user-select', 'none')
+      .attr("preserveAspectRatio", "xMidYMid meet"); // 自适应容器尺寸
+
+    // 树状图缩放功能
+    this.zoom = d3.zoom()
+      .on('zoom', () => {
+        const t = d3.zoomTransform(this.svg.node());
+        this.g.attr("transform", t.scale(t.k));
+      });
+
+    this.svg.call(this.zoom);
+
+    // 设置 svg 的 viewport
+    const viewPortWidth  = 4 * nodeSize.width,
+          viewPortHeight = 8 * nodeSize.height;
+
+    this.svg
+      .attr("viewBox", [
+        -margin.left - viewPortWidth / 2,
+        -margin.top,
+        viewPortWidth + margin.right,
+        viewPortHeight + margin.bottom
+      ]);
+
     // 初始化树状图数据获取器
     this.tree = d3.tree()
       .nodeSize([nodeSize.width, nodeSize.height]);
-    // .separation(function (a, b) { // 设置节点之间的间距
-    //   return (a.parent === b.parent ? 2 : 1) / a.depth
-    // });
+
   }
 
   draw(data) {
@@ -53,13 +78,8 @@ export default class D3Tree {
 
     console.log(this.svg);
     // 删除当前树
-    this.svg && this.svg.remove();
-    this.svg = d3.select(this.$el)
-      .append('svg')
-      .style('user-select', 'none')
-      .attr("preserveAspectRatio", "xMidYMid meet"); // 自适应容器尺寸
-    // .attr('width', this.width)
-    // .attr('height', this.height);
+    this.svg && this.svg.html('');
+
 
     // 获取节点
     let nodes = this.treeData.descendants();
@@ -71,41 +91,17 @@ export default class D3Tree {
     console.log('nodes', nodes);
     console.log('links', links);
 
-    let depth = 0;
     for (let i = 0; i < nodes.length; i++) {
-      depth = Math.max(nodes[i].depth, depth);
       if (nodes[i].children) {
         nodes[i]._children = nodes[i].children;
       }
     }
-
-    // 根节点高度即为深度
-    const viewPortWidth  = 4 * nodeSize.width,
-          viewPortHeight = 8 * nodeSize.height;
-
-
-    this.svg
-      .attr("viewBox", [
-        -margin.left - viewPortWidth / 2,
-        -margin.top,
-        viewPortWidth + margin.right,
-        viewPortHeight + margin.bottom
-      ]);
 
     if (this.g) {
       this.g = this.svg.append('g').attr('transform', this.g.attr('transform'))
     } else {
       this.g = this.svg.append('g').attr('transform', 'translate(40, 40)');
     }
-
-    // 树状图缩放功能
-    this.zoom = d3.zoom()
-      .on('zoom', () => {
-        const t = d3.zoomTransform(this.svg.node());
-        this.g.attr("transform", t.scale(t.k));
-      });
-
-    this.svg.call(this.zoom);
 
     // 绘制线
 

@@ -49,6 +49,7 @@
       transform: translate(-$title-width / 2, -$title-height / 2);
 
       .collapse-tree-node {
+        @import "@/style/opacity.scss";
         $collapse-layer-width: 60px;
         $collapse-layer-height: 10px;
         $collapse-layer-left: ($title-width - $collapse-layer-width) / 2;
