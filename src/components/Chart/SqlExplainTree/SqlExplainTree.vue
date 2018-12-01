@@ -24,6 +24,11 @@
       fill: none;
       stroke: #ccc;
       stroke-width: 1.5px;
+
+      &.error {
+        stroke: red;
+        stroke-width: 5px;
+      }
     }
 
     .node circle {
@@ -98,7 +103,7 @@
         margin: 5px 0;
         overflow: hidden;
         text-overflow: ellipsis;
-        border-bottom: 1px #7f7f7f solid;
+        border-bottom: 1px #ccc solid;
         padding: 0 5px 5px;
         text-align: center;
       }

@@ -6,6 +6,8 @@
         v-if="treeData"
         @on-enter-tree-node="setHoverKey"
         @on-leave-tree-node="clearHoverKey"
+        @show-tree-node-info="showInfoLayer"
+        @on-zoom="hideInfoLayer"
       />
     </div>
 
@@ -23,13 +25,14 @@
     </div>
 
     <div class="plan-layer-toggle" @click="toggle">plan</div>
+    <SqlExplainTreeDetail ref="sqlExplainTreeDetail"/>
   </LayoutContainerContentItem>
 </template>
 
 <script>
-  import LayoutContainerContentItem from '../../Layout/LayoutContainerContentItem';
-  import SqlExplainTree             from '../../Chart/SqlExplainTree';
-  import SqlMenuTree                from '../../Chart/SqlMenuTree';
+  import LayoutContainerContentItem             from '../../Layout/LayoutContainerContentItem';
+  import SqlExplainTree, {SqlExplainTreeDetail} from '../../Chart/SqlExplainTree';
+  import SqlMenuTree                            from '../../Chart/SqlMenuTree';
 
 
   export default {
@@ -54,6 +57,12 @@
       },
       clearHoverKey() {
         this.hoverKey = '';
+      },
+      showInfoLayer(e, d) {
+        this.$refs.sqlExplainTreeDetail.show(e, d.data);
+      },
+      hideInfoLayer(e, d) {
+        this.$refs.sqlExplainTreeDetail.hide();
       }
     },
     watch     : {
@@ -68,6 +77,7 @@
     components: {
       LayoutContainerContentItem,
       SqlExplainTree,
+      SqlExplainTreeDetail,
       SqlMenuTree,
     }
   }

@@ -38,6 +38,7 @@ export default class D3Tree {
       .on('zoom', () => {
         const t = d3.zoomTransform(this.svg.node());
         this.g.attr("transform", t.scale(t.k));
+        this.$context.$emit('on-zoom');
       });
 
     this.svg.call(this.zoom);
@@ -108,7 +109,13 @@ export default class D3Tree {
     this.g.selectAll('.link')
       .data(links)
       .enter().append('path')
-      .attr('class', 'link')
+      .attr('class', (d) => {
+        let nodeClass = 'link';
+        if (d.source.data.color === 'red' && d.source.data.color === d.target.data.color) {
+          nodeClass += ' error';
+        }
+        return nodeClass;
+      })
       .attr('d', d3.linkVertical()
         .x(d => d.x)
         .y(d => d.y));
