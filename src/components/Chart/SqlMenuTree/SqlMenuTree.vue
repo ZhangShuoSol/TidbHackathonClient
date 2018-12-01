@@ -47,7 +47,6 @@
     .node rect {
       cursor: pointer;
       fill: #fff;
-      fill-opacity: 0.5;
       stroke: #3182bd;
       stroke-width: 1.5px;
     }

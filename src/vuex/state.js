@@ -3,5 +3,7 @@ export default {
   format      : [],
   uuid        : '', // 当前 sql 语句的标识, 用于 session 验证
   treeNodes    : [], // 最多包含两个元素, 0: sql查询结构, 1: 设置索引后的结构
-  currentField: ''
+  currentField: '',
+
+  menuVisible: false,
 };

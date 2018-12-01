@@ -55,8 +55,12 @@ export default {
 
         return $row;
       });
+    state.menuVisible = true;
   },
   [types.MUTATION.STORE_FIELD_INDEX_RESULT](state, {field}) {
     state.currentField = field;
+  },
+  [types.MUTATION.STORE_MENU_VISIBLE_STATE](state, visible){
+    state.menuVisible = visible;
   }
 }

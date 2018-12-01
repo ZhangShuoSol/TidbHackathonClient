@@ -21,9 +21,13 @@
 <script>
   export default {
     name   : "LayoutContainer",
-    data() {
-      return {
-        menuVisible: true,
+    props: {
+      visible: false,
+    },
+    computed: {
+      menuVisible: {
+        get() {return this.visible;},
+        set(val) {this.$emit('update:visible', val);}
       }
     },
     methods: {

@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <LayoutContainer>
+    <LayoutContainer :visible.sync="menuVisible">
       <CollapsibleMenu slot="menu"/>
       <MainContainer slot="main">
         <LayoutContainerContentItem></LayoutContainerContentItem>
@@ -11,8 +11,10 @@
 </template>
 
 <script>
+  import {mapState, mapMutations} from 'vuex';
+  import types from './vuex/types'
+
   import store           from './vuex';
-  import HelloWorld      from './components/HelloWorld'
   import LayoutContainer from './components/Layout/LayoutContainer';
   import LayoutContainerContent from './components/Layout/LayoutContainerContent';
   import LayoutContainerContentItem from './components/Layout/LayoutContainerContentItem';
@@ -24,8 +26,21 @@
   export default {
     name      : 'App',
     store,
+    computed: {
+      ...mapState([
+        'menuVisible',
+      ]),
+      menuVisible: {
+        get() {return this.$store.state.menuVisible;},
+        set(val) {this.$store.commit(types.MUTATION.STORE_MENU_VISIBLE_STATE, val);}
+      }
+    },
+    methods: {
+      // ...mapMutations({
+      //   toggleVisibleState: types.MUTATION.STORE_MENU_VISIBLE_STATE
+      // })
+    },
     components: {
-      HelloWorld,
       LayoutContainer,
       LayoutContainerContent,
       LayoutContainerContentItem,
