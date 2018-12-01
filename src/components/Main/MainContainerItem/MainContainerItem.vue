@@ -10,6 +10,7 @@
 <script>
   import LayoutContainerContentItem from '../../Layout/LayoutContainerContentItem';
   import SqlExplainTree             from '../../Chart/SqlExplainTree';
+  import SqlMenuTree                from '../../Chart/SqlMenuTree';
 
 
   export default {
@@ -20,6 +21,7 @@
     components: {
       LayoutContainerContentItem,
       SqlExplainTree,
+      SqlMenuTree,
     }
   }
 </script>

@@ -3,7 +3,7 @@ import Type         from './Type';
 import {MessageBox} from 'element-ui';
 
 
-export const SERVER_BASE_PATH = 'http://192.168.195.63:8666';
+export const SERVER_BASE_PATH = 'http://192.168.197.182:8666';
 export const SERVER_REQUEST_PATH = SERVER_BASE_PATH;
 
 let _instance;// 常规请求实例

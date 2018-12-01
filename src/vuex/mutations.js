@@ -7,6 +7,7 @@ export default {
   },
   [types.MUTATION.STORE_EXECUTE_RESULT](state, result) {
     state.uuid = result.uuid;
+    state.format = `\n${result.format}`;
     state.treeNode = result.node;
     state.plan = result.plan;
   }

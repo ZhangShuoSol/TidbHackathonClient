@@ -7,17 +7,12 @@
 
 <script>
   import D3MenuTree from './D3MenuTree';
-  import json       from '../data/tree'
+  import ChartMixin from '../mixins/chart-mixin';
 
 
   export default {
-    name: "SqlMenuTree",
-    mounted() {
-      this.$nextTick(function () {
-        const menuTree = new D3MenuTree(this.$refs.sqlMenuTree);
-        menuTree.draw(json);
-      })
-    }
+    name  : "SqlMenuTree",
+    mixins: [ChartMixin('sqlMenuTree', D3MenuTree)],
   }
 </script>
 

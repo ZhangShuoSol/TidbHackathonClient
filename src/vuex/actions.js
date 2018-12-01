@@ -8,6 +8,15 @@ export default {
       id : '',
       sql: state.sql,
     });
-    commit(types.MUTATION.STORE_EXECUTE_RESULT, result);
+
+    const format = await Service.format({
+      id: result.uuid,
+      sql: state.sql,
+    });
+
+    commit(types.MUTATION.STORE_EXECUTE_RESULT, {
+      ...result,
+      format
+    });
   }
 };

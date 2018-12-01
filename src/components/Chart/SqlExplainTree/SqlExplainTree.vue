@@ -4,35 +4,13 @@
 </template>
 
 <script>
-  import D3Tree from './D3Tree';
+  import D3Tree     from './D3Tree';
+  import ChartMixin from '../mixins/chart-mixin';
 
 
   export default {
-    name   : 'SqlExplainTree',
-    props  : {
-      data: [Object, Array]
-    },
-    mounted() {
-      this.draw();
-    },
-    methods: {
-      draw() {
-        if (this.$refs.treeNode && this.data) {
-          this.$nextTick(function () {
-            const d3Tree = new D3Tree(this.$refs.treeNode);
-            d3Tree.draw(this.data);
-          })
-        }
-      }
-    },
-    watch  : {
-      data: {
-        deep: true,
-        handler(val) {
-          this.draw();
-        }
-      }
-    }
+    name  : 'SqlExplainTree',
+    mixins: [ChartMixin('treeNode', D3Tree)]
   }
 </script>
 

@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <LayoutContainer>
+      <CollapsibleMenu slot="menu"/>
       <MainContainer slot="main">
         <LayoutContainerContentItem></LayoutContainerContentItem>
         <LayoutContainerContentItem></LayoutContainerContentItem>
@@ -17,6 +18,7 @@
   import LayoutContainerContentItem from './components/Layout/LayoutContainerContentItem';
 
   import MainContainer from './components/Main';
+  import CollapsibleMenu from './components/CollapsibleMenu';
 
 
   export default {
@@ -28,6 +30,7 @@
       LayoutContainerContent,
       LayoutContainerContentItem,
 
+      CollapsibleMenu,
       MainContainer,
     }
   }
