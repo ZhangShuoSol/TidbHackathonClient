@@ -97,36 +97,19 @@
       flex: 1;
       width: 100%;
       height: 100%;
-
-      @keyframes from-right-to-left {
-        from {transform: translate(100%, 0);}
-        to {transform: translate(0, 0);}
-      }
-
-      @keyframes from-left-to-right {
-        from {transform: translate(0, 0)}
-        to {transform: translate(100%, 0)}
-      }
-
-      @keyframes from-right {
-        from {right: 0;}
-        to {right: 50%;}
-      }
+      overflow: hidden;
 
       &.hide {
         display: none;
         flex: 0;
-        /*animation: from-left-to-right .2s;*/
       }
 
       &.show {
         display: block;
         background: rgba(0, 0, 0, 0.85);
-        /*animation: from-right-to-left .2s;*/
 
         & + .plan-layer-toggle {
           right: 50%;
-          /*animation: from-right .2s;*/
         }
       }
     }
