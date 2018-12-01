@@ -10,7 +10,13 @@
       >
         <template v-if="frag.type === 'table'">
           {{frag.table}}.
-          <span class="field">{{frag.field}}</span>
+          <span
+            class="field"
+            :class="{active: currentField === frag.field}"
+            @click="setField(frag.field)"
+          >
+            {{frag.field}}
+          </span>
         </template>
         <template v-else>
           {{frag.text}}
@@ -26,6 +32,12 @@
     name : "SqlFormatter",
     props: {
       sql: Array,
+      currentField: String,
+    },
+    methods: {
+      setField(field) {
+        this.$emit('on-set-field', field)
+      }
     }
   }
 </script>
@@ -65,7 +77,7 @@
           color: #fff;
           cursor: pointer;
 
-          &:hover {
+          &:hover, &.active {
             animation: highlight_field .5s;
             background: rgba(255, 255, 255, 0.2);
             box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2)

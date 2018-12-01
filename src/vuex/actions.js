@@ -18,5 +18,10 @@ export default {
       ...result,
       format
     });
+  },
+  async [types.ACTION.SET_FIELD_INDEX]({commit}, field) {
+    commit(types.MUTATION.STORE_FIELD_INDEX_RESULT, {
+      field,
+    })
   }
 };

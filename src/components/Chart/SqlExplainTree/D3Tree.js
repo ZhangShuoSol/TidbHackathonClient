@@ -1,9 +1,20 @@
 import * as d3 from 'd3'
 
 
-const margin   = {top: 30, right: 20, bottom: 30, left: 20},
-      nodeSize = {width: 300, height: 200, margin: 10},
-      duration = 400;
+const margin       = {top: 30, right: 20, bottom: 30, left: 20},
+      nodeSize     = {width: 300, height: 200, margin: 10},
+      duration     = 400,
+      COLOR_CONFIG = {
+        'TableScan'  : '#3892d2',
+        'TableReader': '#555ac4',
+        'IndexReader': '#d3679d',
+        'IndexLoopUp': '#dc201d',
+        'Selection'  : '#859900',
+        'Projection' : '#2aa198',
+        'StreamAgg'  : '#b58900',
+        'HashAgg'    : '#b58900',
+        'Join'       : '#657b83',
+      };
 
 
 const TITLE_COLOR_CLASS = [
@@ -139,10 +150,17 @@ export default class D3Tree {
 
 function createNode(d, index, group) {
   const div = d3.create('div')
-    .attr('class',
-      `tree-node__block 
-      ${TITLE_COLOR_CLASS[d.depth % 4]} 
-      ${d.data.info.task}`);
+    .attr('class', `tree-node__block ${d.data.info.task}`)
+    .style('background', () => {
+      let type = d.data.name.split('_')[0].trim(),
+          hasJoin = type.indexOf('Join') !== -1;
+
+      if (hasJoin) {
+        type = 'Join';
+      }
+
+      return COLOR_CONFIG[type] || '#000';
+    });
 
   div.append('h1').text(d.data.name);
 

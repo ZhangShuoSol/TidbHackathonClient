@@ -10,8 +10,8 @@ export default {
   },
   [types.MUTATION.STORE_EXECUTE_RESULT](state, result) {
     state.uuid = result.uuid;
-    state.treeNode = result.node;
-    state.plan = result.plan;
+    state.currentField = '';
+    state.treeNodes = [result.node];
 
     state.format = result.format
       .split('\n')
@@ -39,7 +39,7 @@ export default {
                 })
               } else if (regResult = REG_TABLE_FIELD.exec(frag)) {
                 $row.push({
-                  type: 'table',
+                  type : 'table',
                   table: regResult[1],
                   field: regResult[2]
                 })
@@ -55,5 +55,8 @@ export default {
 
         return $row;
       });
+  },
+  [types.MUTATION.STORE_FIELD_INDEX_RESULT](state, {field}) {
+    state.currentField = field;
   }
 }

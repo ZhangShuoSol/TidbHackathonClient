@@ -5,17 +5,6 @@
     :style="position"
     ref="sqlExplainTreeDetail"
   >
-    <!--<p v-for="(value, key) in detail">-->
-      <!--{{key}}: {{value}}-->
-    <!--</p>-->
-    <!--<el-form label-width="50px">-->
-      <!--<el-form-item-->
-        <!--v-for="(value, key) in detail"-->
-        <!--:label="key"-->
-      <!--&gt;-->
-        <!--{{value}}-->
-      <!--</el-form-item>-->
-    <!--</el-form>-->
 
     <div class="el-form">
       <div
@@ -35,7 +24,7 @@
     mounted() {
       this.$nextTick(function () {
         document.addEventListener('click', e => {
-          if (!this.$refs.sqlExplainTreeDetail.contains(e.target)) {
+          if (this.$refs && !this.$refs.sqlExplainTreeDetail.contains(e.target)) {
             this.hide();
           }
         });

@@ -1,7 +1,11 @@
 <template>
   <div class="collapsible-menu-container">
     <div class="sql-formatter">
-      <SqlFormatter :sql="format"/>
+      <SqlFormatter
+        :sql="format"
+        :current-field="currentField"
+        @on-set-field="setField"
+      />
     </div>
   </div>
 </template>
@@ -16,8 +20,14 @@
     name      : "CollapsibleMenuContainer",
     computed  : {
       ...mapState([
-        'format'
+        'format',
+        'currentField',
       ]),
+    },
+    methods: {
+      ...mapActions({
+        setField: types.ACTION.SET_FIELD_INDEX
+      }),
     },
     components: {
       SqlFormatter

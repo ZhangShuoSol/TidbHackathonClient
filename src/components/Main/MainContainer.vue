@@ -9,7 +9,11 @@
       <el-button slot="append" icon="el-icon-search" @click="executeSql"></el-button>
     </el-input>
     <template>
-      <MainContainerItem :treeData="treeNode" :plan="plan"/>
+      <MainContainerItem
+        v-for="treeNode in treeNodes"
+        :key="treeNodes.uuid"
+        :treeData="treeNode"
+      />
     </template>
   </LayoutContainerContent>
 </template>
@@ -30,8 +34,7 @@
     computed  : {
       ...mapState([
         'sql',
-        'treeNode',
-        'plan',
+        'treeNodes',
       ]),
       sqlModel: {
         get() {return this.sql;},
