@@ -2,7 +2,7 @@ import * as d3 from 'd3'
 
 
 const margin   = {top: 30, right: 20, bottom: 30, left: 20},
-      nodeSize = {width: 200, height: 150, margin: 10},
+      nodeSize = {width: 300, height: 200, margin: 10},
       duration = 400;
 
 
@@ -15,10 +15,11 @@ const TITLE_COLOR_CLASS = [
 
 
 export default class D3Tree {
-  constructor(el) {
-    this.$el    = el;
+  constructor(el, context) {
+    this.$el = el;
+    this.$context = context;
     const style = getComputedStyle(this.$el);
-    this.width  = parseFloat(style.width);
+    this.width = parseFloat(style.width);
     this.height = parseFloat(style.height);
 
     // this.svg = d3.select(this.$el)
@@ -55,8 +56,10 @@ export default class D3Tree {
     this.svg && this.svg.remove();
     this.svg = d3.select(this.$el)
       .append('svg')
-      .attr('width', this.width)
-      .attr('height', this.height);
+      .style('user-select', 'none')
+      .attr("preserveAspectRatio", "xMidYMid meet"); // 自适应容器尺寸
+    // .attr('width', this.width)
+    // .attr('height', this.height);
 
     // 获取节点
     let nodes = this.treeData.descendants();
@@ -123,27 +126,79 @@ export default class D3Tree {
       })
       .attr('transform', function (d) {
         return `translate(${d.x}, ${d.y})`;
-      })
-      .on("click", function (d) { //为节点添加click事件
-        if (d.children) {//如果这个节点有children属性，则删除并重新绘图
-          delete d.children;
-          ctx.$_draw();
-        }
-        else {//否则的话，检测这个节点是否有_children属性，有的话为这个节点添加children属性，并重新绘图
-          if (d._children) {
-            d.children = d._children;
-            ctx.$_draw();
-          }
-        }
       });
 
     // 创建标题框
     this.g.selectAll(('.node')).append('foreignObject')
-      .append(function (d, index, group) {
-        const div = document.createElement('div');
-        div.setAttribute('class', `tree-node__title ${TITLE_COLOR_CLASS[d.depth % 4]}`);
-        div.innerHTML = `<h1>${d.data.name}</h1>`;
-        return div;
-      });
+      .append(createNode.bind(this));
   }
+}
+
+function createNode(d, index, group) {
+  const div = d3.create('div')
+    .attr('class', `tree-node__block ${TITLE_COLOR_CLASS[d.depth % 4]}`);
+  div.append('h1').text(d.data.name);
+
+  const body = d3.create('div').attr('class', 'tree-node__body');
+
+  // 节点信息
+  const info = d3.create('div')
+    .attr('class', 'tree-node__info');
+  info.append('div').attr('class', 'info-item')
+    .text(`table: ${d.data.info.table}`);
+  info.append('div').attr('class', 'info-item')
+    .text(`count: ${d.data.info.count}`);
+  info.append('div').attr('class', 'info-item')
+    .text(`time: ${d.data.info.executeinfoMap.time}`);
+
+  // 显示更多按钮
+  const more_info = document.createElement('div');
+  more_info.classList.add('tree-node__info-more');
+  const btn_more = document.createElement('i');
+  btn_more.classList.add('el-icon-more-outline');
+  btn_more.addEventListener("click", e => {
+    e.preventDefault();
+    e.stopPropagation();
+    this.$context.$emit('show-tree-node-info', e, d, index, group);
+  });
+  more_info.appendChild(btn_more);
+
+  // 节点添加鼠标经过, 离开事件
+  div.node().addEventListener('mouseenter', e => {
+    this.$context.$emit('on-enter-tree-node', e, d, index, group);
+  });
+  div.node().addEventListener('mouseleave', e => {
+    this.$context.$emit('on-leave-tree-node', e, d, index, group);
+  });
+
+  // 收缩节点按钮
+  if (d.children || d._children) {
+    const btn_collapseTreeNode = d3.create('div');
+    btn_collapseTreeNode.attr('class', 'collapse-tree-node');
+    btn_collapseTreeNode.node().addEventListener('click', e => {
+      e.preventDefault();
+      e.stopPropagation();
+      if (d.children) {//如果这个节点有children属性，则删除并重新绘图
+        delete d.children;
+        this.$_draw();
+      }
+      else {//否则的话，检测这个节点是否有_children属性，有的话为这个节点添加children属性，并重新绘图
+        if (d._children) {
+          d.children = d._children;
+          this.$_draw();
+        }
+      }
+    });
+    btn_collapseTreeNode.append(_ => d3.create('i')
+      .attr('class', d.children ? 'el-icon-arrow-up' : 'el-icon-arrow-down')
+      .node());
+
+    div.append(_ => btn_collapseTreeNode.node());
+  }
+
+  body.append(_ => info.node());
+  body.append(_ => more_info);
+  div.append(_ => body.node());
+
+  return div.node();
 }

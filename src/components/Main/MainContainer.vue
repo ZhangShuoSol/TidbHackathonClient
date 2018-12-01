@@ -9,7 +9,7 @@
       <el-button slot="append" icon="el-icon-search" @click="executeSql"></el-button>
     </el-input>
     <template>
-      <MainContainerItem :treeData="treeNode" />
+      <MainContainerItem :treeData="treeNode" :plan="plan"/>
     </template>
   </LayoutContainerContent>
 </template>
@@ -31,6 +31,7 @@
       ...mapState([
         'sql',
         'treeNode',
+        'plan',
       ]),
       sqlModel: {
         get() {return this.sql;},

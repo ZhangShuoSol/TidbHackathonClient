@@ -1,3 +1,3 @@
-import MainContainerItem from './MainContainerItem';
+import MainContainerItem from './MainContainerGroup';
 
 export default MainContainerItem;

@@ -23,6 +23,7 @@ export default class D3MenuTree {
     this.i   = 0;
     this.svg = d3.select(this.$el).append('svg');
     this.g   = this.svg
+      .attr("preserveAspectRatio", "xMidYMid meet") // 自适应容器尺寸
       .attr('width', this.width)
       .attr('height', this.height)
       .append('g')
@@ -30,7 +31,9 @@ export default class D3MenuTree {
   }
 
   draw(data) {
-    this.root    = d3.hierarchy(data);
+    this.root    = d3.hierarchy(data, function (d) {
+      return d.nodes;
+    });
     this.root.x0 = 0;
     this.root.y0 = 0;
     this.update(this.root);

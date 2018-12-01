@@ -11,7 +11,7 @@ export default function ChartMixin(resKey, ChartConstructor) {
         if (this.$refs[resKey] && this.data) {
           this.$nextTick(function () {
             this.$refs[resKey].innerHTML = '';
-            const instance = new ChartConstructor(this.$refs[resKey]);
+            const instance = new ChartConstructor(this.$refs[resKey], this);
             instance.draw(this.data);
           })
         }
