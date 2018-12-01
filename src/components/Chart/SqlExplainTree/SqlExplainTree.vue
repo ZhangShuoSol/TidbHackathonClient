@@ -39,6 +39,10 @@
     .tree-node__block {
       $title-width: 200px;
       $title-height: 90px;
+
+      $collapse-layer-width: 60px;
+      $collapse-layer-height: 10px;
+
       background: lightgrey;
       color: #fff;
       border-radius: 5px;
@@ -48,10 +52,23 @@
       height: $title-height;
       transform: translate(-$title-width / 2, -$title-height / 2);
 
+      &.cop {
+        $cop-padding-x: 10px;
+        $cop-padding-y: 20px;
+        padding: $cop-padding-x $cop-padding-y;
+        border-radius: $title-height / 2 + $cop-padding-y;
+        transform:
+          translate(-$title-width / 2 - $cop-padding-y, -$title-height / 2 - $cop-padding-x)
+          scale(0.9);
+
+        .collapse-tree-node {
+          $collapse-layer-left: ($title-width - $collapse-layer-width) / 2  + $cop-padding-y;
+          left: $collapse-layer-left;
+        }
+      }
+
       .collapse-tree-node {
         @import "@/style/opacity.scss";
-        $collapse-layer-width: 60px;
-        $collapse-layer-height: 10px;
         $collapse-layer-left: ($title-width - $collapse-layer-width) / 2;
         position: absolute;
         width: $collapse-layer-width;
@@ -75,7 +92,6 @@
       &.success {background: #67C23A;}
       &.warning {background: #E6A23C;}
       &.danger {background: #F56C6C;}
-
 
       h1 {
         font-size: 14px;

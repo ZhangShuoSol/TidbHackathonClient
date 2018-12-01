@@ -132,7 +132,11 @@ export default class D3Tree {
 
 function createNode(d, index, group) {
   const div = d3.create('div')
-    .attr('class', `tree-node__block ${TITLE_COLOR_CLASS[d.depth % 4]}`);
+    .attr('class',
+      `tree-node__block 
+      ${TITLE_COLOR_CLASS[d.depth % 4]} 
+      ${d.data.info.task}`);
+
   div.append('h1').text(d.data.name);
 
   const body = d3.create('div').attr('class', 'tree-node__body');
@@ -141,11 +145,11 @@ function createNode(d, index, group) {
   const info = d3.create('div')
     .attr('class', 'tree-node__info');
   info.append('div').attr('class', 'info-item')
-    .text(`table: ${d.data.info.table}`);
+    .text(`table: ${d.data.info.table || ''}`);
   info.append('div').attr('class', 'info-item')
-    .text(`count: ${d.data.info.count}`);
+    .text(`count: ${d.data.info.count || 0}`);
   info.append('div').attr('class', 'info-item')
-    .text(`time: ${d.data.info.executeinfoMap.time}`);
+    .text(`time: ${d.data.info.executeinfoMap.time || 0}`);
 
   // 显示更多按钮
   const more_info = document.createElement('div');
