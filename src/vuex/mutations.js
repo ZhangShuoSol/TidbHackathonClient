@@ -1,5 +1,5 @@
 import types from './types';
-import Vue from 'vue';
+import Vue   from 'vue';
 
 
 const REG_UPPER_CASE = /^[A-Z]+$/;
@@ -103,7 +103,10 @@ export default {
   [types.MUTATION.STORE_ADVISE_INDEX](state, adviseIndex) {
     state.adviseIndex = adviseIndex;
   },
-  [types.MUTATION.UPDATE_INDEX_TYPE](state, {select, index}){
+  [types.MUTATION.UPDATE_INDEX_TYPE](state, {select, index}) {
     Vue.set(state.columns[index].Index, 'type', select);
+  },
+  [types.MUTATION.COMPARE_INDEX_TREE](state, result) {
+    state.treeNodes.splice(1, 1, result.node);
   }
 }

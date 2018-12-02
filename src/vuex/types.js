@@ -15,7 +15,8 @@ const types = {
     'STORE_TABLE_COLUMNS',
     'STORE_MENU_VISIBLE_STATE',
     'STORE_ADVISE_INDEX',
-    'UPDATE_INDEX_TYPE'
+    'UPDATE_INDEX_TYPE',
+    'COMPARE_INDEX_TREE',
   ]),
   GETTER  : {},
 };

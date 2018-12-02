@@ -12,7 +12,7 @@
     <div class="table-columns-index" v-if="columnsVisible">
       <h1>
         {{currentKeyword}} Columns
-        <el-button type="primary" plain size="medium" @click="saveIndex">Save</el-button>
+        <el-button type="primary" plain size="medium" @click="getNewIndexTree">Save</el-button>
       </h1>
       <el-scrollbar class="scroll-container">
         <TableColumns
@@ -46,9 +46,10 @@
     },
     methods   : {
       ...mapActions({
-        setKeyword    : types.ACTION.GET_TABLE_FIELDS,
-        getAdviseIndex: types.ACTION.GET_ADVISE_INDEX,
-        updateIndex     : types.ACTION.UPDATE_INDEX
+        setKeyword     : types.ACTION.GET_TABLE_FIELDS,
+        getAdviseIndex : types.ACTION.GET_ADVISE_INDEX,
+        updateIndex    : types.ACTION.UPDATE_INDEX,
+        getNewIndexTree: types.ACTION.GET_NEW_INDEX_TREE,
       }),
       ...mapMutations({
         updateIndexType: types.MUTATION.UPDATE_INDEX_TYPE,

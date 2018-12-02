@@ -40,7 +40,7 @@ export default {
     const adviceIndex = await Service.indexAdvise(state.sql);
     commit(types.MUTATION.STORE_ADVISE_INDEX, adviceIndex);
   },
-  async [types.ACTION.UPDATE_INDEX]({commit, state}, {col, select}) {
+  async [types.ACTION.UPDATE_INDEX]({commit, state, dispatch}, {col, select}) {
     let req = {
       columns: col.ColumnName,
       table  : col.TableName,
@@ -51,9 +51,11 @@ export default {
       await Service.deleteIndex(req);
     }
 
-
   },
   async [types.ACTION.GET_NEW_INDEX_TREE]({commit, state}) {
-    await Service.getNewIndexTree(state.currentKeyword);
+    const result = await Service.select({
+      sql: state.sql
+    });
+    commit(types.MUTATION.COMPARE_INDEX_TREE, result);
   }
 };
