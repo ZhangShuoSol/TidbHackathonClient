@@ -12,6 +12,7 @@ export default {
     state.uuid = result.uuid;
     state.currentKeyword = '';
     state.treeNodes = [result.node];
+    state.columns = [];
 
     state.format = result.format
       .split('\n')
@@ -31,13 +32,18 @@ export default {
         rowSplit.filter(word => word.length > 0)
           .forEach(sqlStr => {
             sqlStr.split(' ').forEach(frag => {
-              let regResult;
-              if (REG_UPPER_CASE.exec(frag)) {
+
+              if (result.tables.indexOf(frag) !== -1) {
+                $row.push({
+                  type: 'table',
+                  text: frag,
+                })
+              } else if (REG_UPPER_CASE.exec(frag)) {
                 $row.push({
                   type: 'key',
                   text: frag
                 })
-              } else if (regResult = REG_TABLE_FIELD.exec(frag)) {
+              } else if (REG_TABLE_FIELD.exec(frag)) {
                 $row.push({
                   type: 'db',
                   text: frag
@@ -56,8 +62,26 @@ export default {
       });
     state.menuVisible = true;
   },
-  [types.MUTATION.STORE_SQL_KEYWORD](state, {keyword}) {
+  /**
+   * 存储表结构
+   * @param state
+   * @param keyword
+   * @param columns
+   * @param indexes
+   */
+  [types.MUTATION.STORE_TABLE_COLUMNS](state, {keyword, columns, indexes}) {
     state.currentKeyword = keyword;
+    state.columns = columns.map(col => {
+      return {
+        ...col,
+        Index: indexes.filter(function (idx) {
+          return idx.Table === col.TableName && idx.Column_name === col.ColumnName;
+        })[0] || {}
+      }
+    });
+
+
+    console.log(state.columns.filter(col => col.Index.length > 0));
   },
   [types.MUTATION.STORE_MENU_VISIBLE_STATE](state, visible) {
     state.menuVisible = visible;

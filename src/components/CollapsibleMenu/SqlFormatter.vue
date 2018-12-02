@@ -42,7 +42,7 @@
         margin-left: 10px;
       }
 
-      .db, .normal, .key, .index {
+      .db, .normal, .key, .table {
         padding: 0 5px;
         border-radius: 4px;
       }
@@ -51,7 +51,7 @@
         color: #9b9b9b;
       }
 
-      .db {
+      .table {
         @keyframes highlight_field {
           from {
             background: rgba(255, 255, 255, 0);

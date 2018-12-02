@@ -9,7 +9,7 @@ const types = {
   MUTATION: generatorMutations([
     'STORE_SQL',
     'STORE_EXECUTE_RESULT',
-    'STORE_SQL_KEYWORD',
+    'STORE_TABLE_COLUMNS',
     'STORE_MENU_VISIBLE_STATE',
   ]),
   GETTER  : {},

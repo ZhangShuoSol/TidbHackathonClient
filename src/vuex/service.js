@@ -22,3 +22,13 @@ export const table = RequestGenerator(
     Message.warning('无法获取该表');
   }
 );
+
+/**
+ * 查询表索引
+ */
+export const index = RequestGenerator(tablename => Request.get('/table/indexs', {tablename}));
+
+/**
+ * 获取所有图表
+ */
+export const getTables = RequestGenerator(() => Request.get('/table/names'));

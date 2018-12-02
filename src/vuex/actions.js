@@ -14,20 +14,26 @@ export default {
       sql: state.sql,
     });
 
+    const tables = await Service.getTables();
+
     commit(types.MUTATION.STORE_EXECUTE_RESULT, {
       ...result,
-      format
+      format,
+      tables,
     });
   },
   async [types.ACTION.GET_TABLE_FIELDS]({commit}, keyword) {
-    if (keyword.type !== 'db') {
+    if (keyword.type !== 'table') {
       return;
     }
 
-    await Service.table(keyword.text);
+    const columns = await Service.table(keyword.text);
+    const indexes = await Service.index(keyword.text);
 
-    commit(types.MUTATION.STORE_SQL_KEYWORD, {
+    commit(types.MUTATION.STORE_TABLE_COLUMNS, {
       keyword: keyword.text,
+      columns,
+      indexes
     })
   }
 };

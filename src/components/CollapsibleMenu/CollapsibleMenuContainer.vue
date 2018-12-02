@@ -7,6 +7,12 @@
         @on-set-keyword="setKeyword"
       />
     </div>
+    <div class="table-columns-index" v-if="columnsVisible">
+      <h1>{{currentKeyword}} Columns</h1>
+      <el-scrollbar class="scroll-container">
+        <TableColumns :columns="columns" />
+      </el-scrollbar>
+    </div>
   </div>
 </template>
 
@@ -14,6 +20,7 @@
   import {mapState, mapActions, mapMutations} from 'vuex';
   import types                                from '../../vuex/types';
   import SqlFormatter                         from './SqlFormatter';
+  import TableColumns                         from './TableColumns';
 
 
   export default {
@@ -22,15 +29,20 @@
       ...mapState([
         'format',
         'currentKeyword',
+        'columns',
       ]),
+      columnsVisible() {
+        return this.currentKeyword && this.columns.length > 0;
+      }
     },
-    methods: {
+    methods   : {
       ...mapActions({
         setKeyword: types.ACTION.GET_TABLE_FIELDS
       }),
     },
     components: {
-      SqlFormatter
+      SqlFormatter,
+      TableColumns,
     }
 
   }
@@ -43,6 +55,20 @@
 
     .sql-formatter {
       padding: 15px;
+    }
+
+    .table-columns-index {
+      margin-top: 20px;
+      background: #202840;
+      height: 100%;
+
+      h1 {
+        font-size: 24px;
+        color: #fff;
+        border-bottom: 1px solid #a7a7a7;
+        padding: 5px 15px;
+      }
+
     }
   }
 </style>

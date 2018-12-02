@@ -1,5 +1,6 @@
 <template>
   <div class="layout-container">
+
     <div
       class="collapsible-menu"
       :class="{hide: !menuVisible}"
@@ -10,6 +11,8 @@
       >
         <i :class="[menuVisible ? 'el-icon-arrow-left' : 'el-icon-arrow-right']"></i>
       </div>
+
+
       <slot name="menu"></slot>
     </div>
     <div class="layout-container-main">
