@@ -10,7 +10,7 @@ export default {
     });
 
     const format = await Service.format({
-      id: result.uuid,
+      id : result.uuid,
       sql: state.sql,
     });
 
@@ -20,7 +20,12 @@ export default {
     });
   },
   async [types.ACTION.GET_TABLE_FIELDS]({commit}, keyword) {
-    if (keyword.type !== 'db') {return;}
+    if (keyword.type !== 'db') {
+      return;
+    }
+
+    await Service.table(keyword.text);
+
     commit(types.MUTATION.STORE_SQL_KEYWORD, {
       keyword: keyword.text,
     })

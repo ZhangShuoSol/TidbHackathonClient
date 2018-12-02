@@ -23,8 +23,9 @@
     name   : "SqlExplainTreeDetail",
     mounted() {
       this.$nextTick(function () {
+        const ctx = this;
         document.addEventListener('click', e => {
-          if (this.$refs && !this.$refs.sqlExplainTreeDetail.contains(e.target)) {
+          if (ctx.$refs && ctx.$refs.sqlExplainTreeDetail && !ctx.$refs.sqlExplainTreeDetail.contains(e.target)) {
             this.hide();
           }
         });
@@ -52,7 +53,7 @@
 
         this.detail = {
           name : detail.name,
-          table: detail.info.table || '',
+          table: detail.info.operatorinfoMap.table || '',
           count: detail.info.count || 0,
           time : detail.info.executeinfoMap.time || 0,
           rows : detail.info.executeinfoMap.rows || 0,

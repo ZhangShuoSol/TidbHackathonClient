@@ -170,7 +170,7 @@ function createNode(d, index, group) {
   const info = d3.create('div')
     .attr('class', 'tree-node__info');
   info.append('div').attr('class', 'info-item')
-    .text(`table: ${d.data.info.table || ''}`);
+    .text(`table: ${d.data.info.operatorinfoMap.table || ''}`);
   info.append('div').attr('class', 'info-item')
     .text(`count: ${d.data.info.count || 0}`);
   info.append('div').attr('class', 'info-item')
