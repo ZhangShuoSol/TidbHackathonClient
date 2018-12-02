@@ -85,5 +85,8 @@ export default {
   },
   [types.MUTATION.STORE_MENU_VISIBLE_STATE](state, visible) {
     state.menuVisible = visible;
+  },
+  [types.MUTATION.STORE_ADVISE_INDEX](state, adviseIndex){
+    state.adviseIndex = adviseIndex;
   }
 }

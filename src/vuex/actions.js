@@ -35,5 +35,9 @@ export default {
       columns,
       indexes
     })
+  },
+  async [types.ACTION.GET_ADVISE_INDEX]({commit, state}){
+    const adviceIndex = await Service.indexAdvise(state.sql);
+    commit(types.MUTATION.STORE_ADVISE_INDEX, adviceIndex);
   }
 };

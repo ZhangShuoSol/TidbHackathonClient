@@ -4,7 +4,9 @@
       <SqlFormatter
         :sql="format"
         :current-keyword="currentKeyword"
+        :advise-info="adviseIndex"
         @on-set-keyword="setKeyword"
+        @get-advise-index="getAdviseIndex"
       />
     </div>
     <div class="table-columns-index" v-if="columnsVisible">
@@ -30,6 +32,7 @@
         'format',
         'currentKeyword',
         'columns',
+        'adviseIndex',
       ]),
       columnsVisible() {
         return this.currentKeyword && this.columns.length > 0;
@@ -37,7 +40,8 @@
     },
     methods   : {
       ...mapActions({
-        setKeyword: types.ACTION.GET_TABLE_FIELDS
+        setKeyword: types.ACTION.GET_TABLE_FIELDS,
+        getAdviseIndex: types.ACTION.GET_ADVISE_INDEX,
       }),
     },
     components: {

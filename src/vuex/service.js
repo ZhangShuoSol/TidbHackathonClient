@@ -1,5 +1,5 @@
 import Request, {RequestGenerator} from '@/utils/ServiceInstance';
-import { Message } from 'element-ui';
+import {Message}                   from 'element-ui';
 
 
 /**
@@ -32,3 +32,8 @@ export const index = RequestGenerator(tablename => Request.get('/table/indexs', 
  * 获取所有图表
  */
 export const getTables = RequestGenerator(() => Request.get('/table/names'));
+
+/**
+ * 索引建议
+ */
+export const indexAdvise = RequestGenerator(sql => Request.post('/indexadvise', {sql}));

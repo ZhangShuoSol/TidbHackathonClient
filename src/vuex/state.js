@@ -5,6 +5,7 @@ export default {
   treeNodes    : [], // 最多包含两个元素, 0: sql查询结构, 1: 设置索引后的结构
   currentKeyword: '',
   columns: [],
+  adviseIndex: '',
 
   menuVisible: false,
 };

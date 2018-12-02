@@ -13,20 +13,47 @@
           {{frag.text}}
       </span>
     </div>
+
+
+    <el-popover
+      placement="right"
+      width="400"
+      trigger="click"
+      popper-class="advise-index-popper"
+    >
+      <pre>{{adviseInfo}}</pre>
+      <div slot="reference" class="btn-show-advise-index" @click="getAdviseIndex">
+        <i class="el-icon-more-outline"></i>
+      </div>
+    </el-popover>
+
   </div>
 </template>
 
 <script>
+
+
   export default {
-    name   : "SqlFormatter",
-    props  : {
-      sql         : Array,
+    name      : "SqlFormatter",
+    props     : {
+      sql           : Array,
       currentKeyword: String,
+      adviseInfo    : String,
     },
-    methods: {
+    data() {
+      return {
+        adviceVisible: false,
+      }
+    },
+    methods   : {
       setKeyword(field) {
         this.$emit('on-set-keyword', field)
+      },
+      getAdviseIndex() {
+        this.$emit('get-advise-index');
       }
+    },
+    components: {
     }
   }
 </script>
@@ -34,6 +61,22 @@
 <style lang='scss' rel="stylesheet/scss" type="text/scss">
   .sql-formatter-highlight {
     width: 100%;
+    position: relative;
+
+    .btn-show-advise-index {
+      position: absolute;
+      bottom: 10px;
+      right: 10px;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 1px solid lightgrey;
+      border-radius: 20px;
+      color: lightgrey;
+      cursor: pointer;
+    }
 
     .sql-frag-row {
       margin: 5px 0;
@@ -72,6 +115,12 @@
         }
       }
 
+    }
+  }
+
+  .advise-index-popper {
+    pre {
+      white-space: pre-wrap;
     }
   }
 </style>
