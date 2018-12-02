@@ -1,19 +1,32 @@
 <template>
   <div class="table-columns">
-    <div class="table-columns-item" v-for="col in columns">
+    <div class="table-columns-item" v-for="(col, index) in columns">
       <div class="table-columns-item-field">{{col.ColumnName}}</div>
       <div class="table-columns-item-field">{{col.ColumnTypeName}}</div>
       <div class="table-columns-item-field">{{parseFloat(col.ColumnType).toFixed(2)}}</div>
-      <div class="table-columns-item-field">{{col.Index.Key_name}}</div>
+      <TableColumnsItemField
+        :col="col"
+        :index="index"
+        @on-change-index-type="onIndexTypeChange"
+      />
     </div>
   </div>
 </template>
 
 <script>
+  import TableColumnsItemField from './TableColumnsItemField';
   export default {
     name : "TableColumns",
     props: {
       columns: Array,
+    },
+    methods: {
+      onIndexTypeChange(val) {
+        this.$emit('on-change-index-type', val);
+      }
+    },
+    components: {
+      TableColumnsItemField,
     }
   }
 </script>
@@ -29,6 +42,7 @@
       color: #9c9c9c;
       cursor: pointer;
       display: flex;
+      align-items: center;
 
       .table-columns-item-field {
         overflow: hidden;

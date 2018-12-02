@@ -37,3 +37,18 @@ export const getTables = RequestGenerator(() => Request.get('/table/names'));
  * 索引建议
  */
 export const indexAdvise = RequestGenerator(sql => Request.post('/indexadvise', {sql}));
+
+/**
+ * 添加新索引
+ */
+export const addIndex = RequestGenerator(val => Request.post('/table/indexs', val));
+
+/**
+ * 删除索引
+ */
+export const deleteIndex = RequestGenerator(val => Request.delete('/table/indexs', val));
+
+/**
+ * 查询表
+ */
+export const getNewIndexTree = RequestGenerator(tablename => Request.get('/table/indexs', {tablename}));

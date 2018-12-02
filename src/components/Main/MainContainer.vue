@@ -10,9 +10,10 @@
     </el-input>
     <template>
       <MainContainerItem
-        v-for="treeNode in treeNodes"
+        v-for="(treeNode, index) in treeNodes"
         :key="treeNodes.uuid"
         :treeData="treeNode"
+        :index="index"
         @on-plan-show="setMenuVisible(false)"
       />
     </template>

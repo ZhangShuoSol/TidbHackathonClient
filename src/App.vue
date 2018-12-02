@@ -3,8 +3,6 @@
     <LayoutContainer :visible.sync="menuVisible">
       <CollapsibleMenu slot="menu"/>
       <MainContainer slot="main">
-        <LayoutContainerContentItem></LayoutContainerContentItem>
-        <LayoutContainerContentItem></LayoutContainerContentItem>
       </MainContainer>
     </LayoutContainer>
   </div>

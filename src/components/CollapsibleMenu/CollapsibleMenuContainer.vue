@@ -10,9 +10,15 @@
       />
     </div>
     <div class="table-columns-index" v-if="columnsVisible">
-      <h1>{{currentKeyword}} Columns</h1>
+      <h1>
+        {{currentKeyword}} Columns
+        <el-button type="primary" plain size="medium" @click="saveIndex">Save</el-button>
+      </h1>
       <el-scrollbar class="scroll-container">
-        <TableColumns :columns="columns" />
+        <TableColumns
+          :columns="columns"
+          @on-change-index-type="updateIndex"
+        />
       </el-scrollbar>
     </div>
   </div>
@@ -40,8 +46,12 @@
     },
     methods   : {
       ...mapActions({
-        setKeyword: types.ACTION.GET_TABLE_FIELDS,
+        setKeyword    : types.ACTION.GET_TABLE_FIELDS,
         getAdviseIndex: types.ACTION.GET_ADVISE_INDEX,
+        updateIndex     : types.ACTION.UPDATE_INDEX
+      }),
+      ...mapMutations({
+        updateIndexType: types.MUTATION.UPDATE_INDEX_TYPE,
       }),
     },
     components: {
@@ -71,6 +81,10 @@
         color: #fff;
         border-bottom: 1px solid #a7a7a7;
         padding: 5px 15px;
+
+        button {
+          float: right;
+        }
       }
 
     }

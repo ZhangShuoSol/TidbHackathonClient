@@ -1,8 +1,12 @@
 import types from './types';
+import Vue from 'vue';
 
 
 const REG_UPPER_CASE = /^[A-Z]+$/;
 const REG_TABLE_FIELD = /^([A-Za-z]+)\.([A-Za-z]+\w+)$/;
+
+const REG_FK = /^fk_\w+]/i;
+const REG_INDEX = /^index_\w+]/i;
 
 export default {
   [types.MUTATION.STORE_SQL](state, sql) {
@@ -72,11 +76,21 @@ export default {
   [types.MUTATION.STORE_TABLE_COLUMNS](state, {keyword, columns, indexes}) {
     state.currentKeyword = keyword;
     state.columns = columns.map(col => {
+      let Index = indexes.filter(function (idx) {
+        return idx.Table === col.TableName && idx.Column_name === col.ColumnName;
+      })[0];
+      // 0: 不可编辑(PRIMARY, FK), 1: index (普通索引), 2: 空
+      if (!Index) {
+        Index = {type: 2};
+      } else if (Index.Key_name === 'PRIMARY' || Index.Key_name.substr(0, 3) === 'fk_') {
+        Index.type = 0;
+      } else {
+        Index.type = 1
+      }
+
       return {
         ...col,
-        Index: indexes.filter(function (idx) {
-          return idx.Table === col.TableName && idx.Column_name === col.ColumnName;
-        })[0] || {}
+        Index
       }
     });
 
@@ -86,7 +100,10 @@ export default {
   [types.MUTATION.STORE_MENU_VISIBLE_STATE](state, visible) {
     state.menuVisible = visible;
   },
-  [types.MUTATION.STORE_ADVISE_INDEX](state, adviseIndex){
+  [types.MUTATION.STORE_ADVISE_INDEX](state, adviseIndex) {
     state.adviseIndex = adviseIndex;
+  },
+  [types.MUTATION.UPDATE_INDEX_TYPE](state, {select, index}){
+    Vue.set(state.columns[index].Index, 'type', select);
   }
 }
