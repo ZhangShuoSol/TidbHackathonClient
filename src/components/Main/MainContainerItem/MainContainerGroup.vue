@@ -42,6 +42,7 @@
       treeData    : [Object, null],
       plan        : [Object, Array],
       setIndexFunc: false,
+      index       : Number
     },
     data() {
       return {
